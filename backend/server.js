@@ -1,15 +1,23 @@
 require("dotenv").config();
+const cors = require("cors");
 const express = require("express");
+const mongoose = require("mongoose");
 
 const chats = require("./data");
 
-const app = express();
 const port = process.env.PORT || 5000;
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.get("/", (req, res) => {
     res.send("api test");
 });
 app.get("/api/chats", (req, res) => {
+    console.log("chats api");
     res.send(chats);
 });
 app.get("/api/chats/:id", (req, res) => {
