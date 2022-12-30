@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
+
+.Layout {
+    min-height: 100vh;
+    display: flex;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)),
+        url("./background.jpg");
+    background-size: cover;
+    background-position: center;
+}
