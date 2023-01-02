@@ -19,10 +19,10 @@ function Home() {
             <Box
                 d="flex"
                 justifyContent="center"
-                p={3}
+                p="3px"
                 bg="white"
                 w="100%"
-                m="40px 0 15px 0"
+                m="60px 0 20px 0"
                 borderRadius="lg"
                 borderWidth="1px"
             >
@@ -36,7 +36,13 @@ function Home() {
                     WhatDat
                 </Text>
             </Box>
-            <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
+            <Box
+                bg="white"
+                w="100%"
+                p="4px"
+                borderRadius="lg"
+                borderWidth="1px"
+            >
                 <Tabs variant="soft-rounded" colorScheme="whatsapp">
                     <TabList mb="1em">
                         <Tab width="50%">Login</Tab>

@@ -30,7 +30,6 @@ function Chats() {
     return chats.map((chat) => {
         return <div key={chat._id}>{chat.chatName}</div>;
     });
-    // return <div>Fuck You</div>;
 }
 
 export default Chats;
