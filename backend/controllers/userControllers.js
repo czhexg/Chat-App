@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 function registerUser(req, res) {
-    const { name, email, password, profilePicture } = req.body;
+    const { name, email, password, picture } = req.body;
 
     if (!name || !email || !password) {
         res.status(400);
@@ -18,12 +18,20 @@ function registerUser(req, res) {
             throw new Error("User already exists!");
         } else {
             bcrypt.hash(password, saltRounds, function (err, passwordHash) {
-                newUser = new User({
-                    name: name,
-                    email: email,
-                    password: passwordHash,
-                    picture: profilePicture,
-                });
+                if (picture) {
+                    newUser = new User({
+                        name: name,
+                        email: email,
+                        password: passwordHash,
+                        picture: picture,
+                    });
+                } else {
+                    newUser = new User({
+                        name: name,
+                        email: email,
+                        password: passwordHash,
+                    });
+                }
                 newUser.save((err, savedUser) => {
                     if (err) {
                         res.status(400);
@@ -38,7 +46,7 @@ function registerUser(req, res) {
                             token: generateToken(savedUser._id),
                         });
                     }
-                    res.status;
+                    res.status(200);
                 });
             });
         }
@@ -75,4 +83,31 @@ function loginUser(req, res) {
     });
 }
 
-module.exports = { registerUser, loginUser };
+function findUsers(req, res) {
+    const keyword = req.query.search;
+
+    if (keyword) {
+        User.find(
+            {
+                $and: [
+                    {
+                        $or: [
+                            { name: { $regex: keyword, $options: "i" } },
+                            { email: { $regex: keyword, $options: "i" } },
+                        ],
+                    },
+                    {
+                        _id: { 
+                            $ne: req.user._id 
+                        },
+                    },
+                ],
+            },
+            (err, foundUsers) => {
+                res.send(foundUsers);
+            }
+        );
+    }
+}
+
+module.exports = { registerUser, loginUser, findUsers };

@@ -4,6 +4,7 @@ const express = require("express");
 
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 
 const port = process.env.PORT || 5000;
 
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
 
 connectDB().then(() => {
     app.listen(port, () => {
