@@ -1,23 +1,83 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
     VStack,
     FormControl,
     FormLabel,
-    FormErrorMessage,
-    FormHelperText,
+    // FormErrorMessage,
+    // FormHelperText,
     Input,
     InputRightElement,
     InputGroup,
     Button,
+    useToast,
 } from "@chakra-ui/react";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    function handleSubmit() {}
+    const navigate = useNavigate();
+    const toast = useToast();
+
+    function handleSubmit() {
+        setLoading(true);
+        if (!email || !password) {
+            toast({
+                title: "Please fill in all required fields!",
+                status: "warning",
+                duration: 9000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
+            return;
+        } else {
+            try {
+                fetch("http://localhost:5000/api/user/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                    }),
+                })
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((userInfo) => {
+                        toast({
+                            title: "Registration Successful",
+                            status: "success",
+                            duration: 9000,
+                            isClosable: true,
+                            position: "bottom",
+                        });
+
+                        sessionStorage.setItem(
+                            "userInfo",
+                            JSON.stringify(userInfo)
+                        );
+                        setLoading(false);
+                        navigate("/chats");
+                    });
+            } catch (error) {
+                toast({
+                    title: "An error occured!",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "bottom",
+                });
+                setLoading(false);
+            }
+        }
+    }
 
     return (
         <VStack>
