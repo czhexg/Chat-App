@@ -43,7 +43,6 @@ function accessChat(req, res) {
             if (foundChats.length > 0) {
                 res.send(foundChats[0]);
             } else {
-                console.log("1");
                 const chatData = new Chat({
                     chatName: "sender",
                     isGroupChat: false,
@@ -51,12 +50,11 @@ function accessChat(req, res) {
                 });
 
                 chatData.save((error, savedChat) => {
-                    console.log("2");
                     if (error) {
                         console.log(error);
                     } else {
                         savedChat.populate("users", "-password").then(() => {
-                            console.log("3");
+                            console.log(savedChat);
                             res.status(200).send(savedChat);
                         });
                     }
@@ -66,7 +64,6 @@ function accessChat(req, res) {
 }
 
 function fetchChats(req, res) {
-    console.log(req.user.id);
     Chat.find({ users: { $elemMatch: { $eq: req.user.id } } })
         .populate([
             { path: "users", select: "-password" },
@@ -81,7 +78,6 @@ function fetchChats(req, res) {
         ])
         .sort({ updatedAt: -1 })
         .exec((err, foundChats) => {
-            console.log(foundChats);
             res.send(foundChats);
         });
 }
@@ -91,7 +87,7 @@ function createGroupChat(req, res) {
         return res.status(400).send({ message: "Please fill all the fields!" });
     }
 
-    let users = JSON.parse(req.body.users);
+    let users = req.body.users;
 
     if (users.length < 2) {
         return res

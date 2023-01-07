@@ -42,7 +42,7 @@ function registerUser(req, res) {
                             _id: savedUser.id,
                             name: savedUser.name,
                             email: savedUser.email,
-                            profilePicture: savedUser.picture,
+                            picture: savedUser.picture,
                             token: generateToken(savedUser._id),
                         });
                     }
@@ -67,7 +67,7 @@ function loginUser(req, res) {
                             _id: foundUser.id,
                             name: foundUser.name,
                             email: foundUser.email,
-                            profilePicture: foundUser.picture,
+                            picture: foundUser.picture,
                             token: generateToken(foundUser._id),
                         });
                     } else {
@@ -97,14 +97,14 @@ function findUsers(req, res) {
                         ],
                     },
                     {
-                        _id: { 
-                            $ne: req.user._id 
+                        _id: {
+                            $ne: req.user._id,
                         },
                     },
                 ],
             },
             (err, foundUsers) => {
-                res.send(foundUsers);
+                res.json(foundUsers);
             }
         );
     }
