@@ -60,7 +60,7 @@ function MyChats({ fetchAgain }) {
                 paddingBottom={3}
                 paddingX={3}
                 fontSize={{ base: "28px", md: "30px" }}
-                fontFamily="Work sans"
+                fontFamily="Inter"
                 display="flex"
                 width="100%"
                 justifyContent="space-between"
@@ -72,6 +72,7 @@ function MyChats({ fetchAgain }) {
                         display="flex"
                         fontSize={{ base: "17px", md: "10px", lg: "17px" }}
                         rightIcon={<AddIcon />}
+                        fontFamily="Inter"
                     >
                         New Group
                     </Button>

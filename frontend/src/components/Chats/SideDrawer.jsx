@@ -164,7 +164,7 @@ function SideDrawer() {
                                 size="sm"
                                 cursor="pointer"
                                 name={user.name}
-                                src={user.profilePicture}
+                                src={user.picture}
                             />
                         </MenuButton>
                         <MenuList>
