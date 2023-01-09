@@ -52,7 +52,7 @@ function Login() {
                     })
                     .then((userInfo) => {
                         toast({
-                            title: "Registration Successful",
+                            title: "Login Successful",
                             status: "success",
                             duration: 9000,
                             isClosable: true,
