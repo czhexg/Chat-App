@@ -16,7 +16,7 @@ import UpdateGroupChatModal from "./UpdateGroupChatModal";
 
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://chat-app-czhexg.vercel.app";
 let socket, selectedChatCompare;
 
 function SingleChat({ fetchAgain, setFetchAgain }) {
