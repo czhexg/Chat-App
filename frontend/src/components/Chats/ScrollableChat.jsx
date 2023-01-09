@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 
 function ScrollableChat({ messages }) {
-    console.log(messages);
     const { user } = ChatState();
 
     function isSameSender(messages, message, index, userId) {

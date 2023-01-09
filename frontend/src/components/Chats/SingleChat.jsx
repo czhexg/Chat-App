@@ -29,7 +29,13 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
 
     const toast = useToast();
 
-    const { user, selectedChat, setSelectedChat } = ChatState();
+    const {
+        user,
+        selectedChat,
+        setSelectedChat,
+        notification,
+        setNotification,
+    } = ChatState();
 
     function getSenderName(loggedUser, users) {
         return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
@@ -125,7 +131,10 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
                 !selectedChatCompare ||
                 selectedChatCompare._id !== newMessageReceived.chat._id
             ) {
-                // give notification
+                if (!notification.includes(newMessageReceived)) {
+                    setNotification([newMessageReceived, ...notification]);
+                    setFetchAgain(!fetchAgain);
+                }
             } else {
                 setMessages([...messages, newMessageReceived]);
             }
@@ -151,7 +160,6 @@ function SingleChat({ fetchAgain, setFetchAgain }) {
             let timeNow = new Date().getTime();
             let timeDiff = timeNow - lastTypingTime;
             if (timeDiff >= timerLength && temp_typing) {
-                console.log("stop typing");
                 socket.emit("stop typing", selectedChat._id);
                 setTyping(false);
             }

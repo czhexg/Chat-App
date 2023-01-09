@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import {
     Avatar,
+    AvatarBadge,
     Box,
     Button,
     Input,
@@ -36,12 +37,23 @@ function SideDrawer() {
     const [searchResult, setSearchResult] = useState([]);
     const [loading, setLoading] = useState(false);
     const [loadingChat, setLoadingChat] = useState(false);
-    const { setSelectedChat, user, chats, setChats } = ChatState();
+    const {
+        setSelectedChat,
+        user,
+        chats,
+        setChats,
+        notification,
+        setNotification,
+    } = ChatState();
 
     const navigate = useNavigate();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
+
+    function getSenderName(loggedUser, users) {
+        return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+    }
 
     function logoutHandler() {
         sessionStorage.removeItem("userInfo");
@@ -154,9 +166,49 @@ function SideDrawer() {
                 <Box>
                     <Menu>
                         <MenuButton padding="10px">
-                            <BellIcon fontSize="2xl" />
+                            <Avatar
+                                size="xs"
+                                bg="white"
+                                icon={<BellIcon fontSize="2xl" color="black" />}
+                            >
+                                {notification.length ? (
+                                    <AvatarBadge
+                                        boxSize="1.5em"
+                                        bg="red"
+                                        placement="top-end"
+                                    >
+                                        {notification.length}
+                                    </AvatarBadge>
+                                ) : (
+                                    <></>
+                                )}
+                            </Avatar>
                         </MenuButton>
-                        {/* <MenuList></MenuList> */}
+                        <MenuList paddingLeft={3}>
+                            {!notification.length && "No new messages"}
+                            {notification.map((notif) => {
+                                return (
+                                    <MenuItem
+                                        key={notif._id}
+                                        onClick={() => {
+                                            setSelectedChat(notif.chat);
+                                            setNotification(
+                                                notification.filter(
+                                                    (n) => n !== notif
+                                                )
+                                            );
+                                        }}
+                                    >
+                                        {notif.chat.isGroupChat
+                                            ? `New message in ${notif.chat.chatName}`
+                                            : `New message from ${getSenderName(
+                                                  user,
+                                                  notif.chat.users
+                                              )}`}
+                                    </MenuItem>
+                                );
+                            })}
+                        </MenuList>
                     </Menu>
                     <Menu>
                         <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
