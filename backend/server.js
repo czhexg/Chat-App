@@ -42,7 +42,7 @@ connectDB().then(() => {
     const io = require("socket.io")(server, {
         pingTimeout: 30000,
         cors: {
-            origin: "http://localhost:3000",
+            origin: "https://chat-app-czhexg.vercel.app",
         },
     });
 
