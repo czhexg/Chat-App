@@ -90,7 +90,7 @@ function SignUp() {
             return;
         } else {
             try {
-                fetch("/user/register", {
+                fetch("/api/user/register", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
