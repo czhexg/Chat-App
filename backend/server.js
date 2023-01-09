@@ -19,6 +19,19 @@ app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("*", (req, res) => {
+    res.sendFile(
+        path.join(__dirname, "../frontend/build/index.html"),
+        (err) => {
+            if (err) {
+                res.status(500).send(err);
+            }
+        }
+    );
+});
+
 connectDB().then(() => {
     const server = app.listen(port, () => {
         console.log(`Server started on port ${port}`);
