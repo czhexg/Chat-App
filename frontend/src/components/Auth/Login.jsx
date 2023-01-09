@@ -37,7 +37,7 @@ function Login() {
             return;
         } else {
             try {
-                fetch("http://localhost:5000/api/user/login", {
+                fetch("/api/user/login", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
