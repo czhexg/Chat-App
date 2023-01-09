@@ -16,6 +16,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 
+app.get("/api/test", (req, res) => {
+    res.send("test");
+});
+
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
