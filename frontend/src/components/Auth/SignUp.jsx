@@ -90,7 +90,7 @@ function SignUp() {
             return;
         } else {
             try {
-                fetch("http://localhost:5000/api/user/register", {
+                fetch("/user/register", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
