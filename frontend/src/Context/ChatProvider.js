@@ -20,7 +20,7 @@ function ChatProvider({ children }) {
         } else {
             setUser(userInfo);
         }
-    }, []);
+    }, [navigate]);
 
     return (
         <ChatContext.Provider
