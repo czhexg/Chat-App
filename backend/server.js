@@ -46,7 +46,7 @@ connectDB().then(() => {
     const io = require("socket.io")(server, {
         pingTimeout: 30000,
         cors: {
-            origin: "https://chat-app-czhexg.vercel.app",
+            origin: "https://chat-app-b4at.onrender.com",
         },
     });
 
